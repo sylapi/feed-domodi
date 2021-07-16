@@ -75,13 +75,14 @@ class Product implements ProductSerializer
 
     /**
      * @Serializer\Type("string")
+     * @Serializer\SerializedName("google_product_category")
      * @Serializer\XmlElement(cdata=false, namespace="http://base.google.com/ns/1.0")
      */
     private $productCategory; 
 
     /**
      * @Serializer\XmlElement(cdata=false)
-     * @Serializer\XmlList(inline = true, entry = "google_product_category", namespace="http://base.google.com/ns/1.0")
+     * @Serializer\XmlList(inline = true, entry = "product_type", namespace="http://base.google.com/ns/1.0")
      */
     private $productTypes;  
 
@@ -386,11 +387,7 @@ class Product implements ProductSerializer
      */ 
     public function getProductCategory()
     {
-        if(isset($this->productCategory[Feed::NAME])) {
-            return $this->productCategory[Feed::NAME];
-        }
-        
-        return null;
+        return $this->productCategory;
     }
 
     /**
@@ -710,7 +707,7 @@ class Product implements ProductSerializer
      * @Serializer\VirtualProperty
      * @Serializer\SerializedName("custom_label_0")
      * @Serializer\XmlElement(cdata=false, namespace="http://base.google.com/ns/1.0")
-     * @return string
+     * @return null|string
      */
     public function getCustomLabel0()
     {
@@ -725,7 +722,7 @@ class Product implements ProductSerializer
      * @Serializer\VirtualProperty
      * @Serializer\SerializedName("custom_label_1")
      * @Serializer\XmlElement(cdata=false, namespace="http://base.google.com/ns/1.0")
-     * @return string
+     * @return null|string
      */
     public function getCustomLabel1()
     {
@@ -740,7 +737,7 @@ class Product implements ProductSerializer
      * @Serializer\VirtualProperty
      * @Serializer\SerializedName("custom_label_2")
      * @Serializer\XmlElement(cdata=false, namespace="http://base.google.com/ns/1.0")
-     * @return string
+     * @return null|string
      */
     public function getCustomLabel2()
     {
@@ -755,7 +752,7 @@ class Product implements ProductSerializer
      * @Serializer\VirtualProperty
      * @Serializer\SerializedName("custom_label_3")
      * @Serializer\XmlElement(cdata=false, namespace="http://base.google.com/ns/1.0")
-     * @return string
+     * @return null|string
      */
     public function getCustomLabel3()
     {
@@ -770,7 +767,7 @@ class Product implements ProductSerializer
      * @Serializer\VirtualProperty
      * @Serializer\SerializedName("custom_label_4")
      * @Serializer\XmlElement(cdata=false, namespace="http://base.google.com/ns/1.0")
-     * @return string
+     * @return null|string
      */
     public function getCustomLabel4()
     {
@@ -840,6 +837,22 @@ class Product implements ProductSerializer
                         case 'Sylapi\Feeds\Models\Shipping' :
                             $elem = (new Shipping)->make($elem);
                         break;                        
+                    }
+                }
+
+                if($itemVar === 'productCategory') {
+                    if(is_array($elem) && isset($elem[Feed::NAME])) {
+                        $elem = $elem[Feed::NAME];
+                    } else {
+                        $elem = null;
+                    }
+                }
+
+                if($itemVar === 'productTypes') {
+                    if(is_array($elem) && isset($elem[Feed::NAME])) {
+                        $elem = $elem[Feed::NAME];
+                    } else {
+                        $elem = null;
                     }
                 }
 
