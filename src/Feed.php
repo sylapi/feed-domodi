@@ -6,7 +6,7 @@ use Sylapi\Feeds\Contracts\ProductSerializer;
 
 class Feed extends FeedAbstract
 {
-    const NAME = 'Domodi';
+    const NAME = 'domodi';
 
     public function getDefaultFileName(): string
     {
