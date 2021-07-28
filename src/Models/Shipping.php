@@ -49,7 +49,10 @@ class Shipping
      */ 
     public function getPrice()
     {
-        return $this->price.' '.$this->getCurrency();
+        if($this->price && $this->getCurrency()) {
+            return $this->price.' '.$this->getCurrency();
+        }
+        return null;
     }
 
     /**
